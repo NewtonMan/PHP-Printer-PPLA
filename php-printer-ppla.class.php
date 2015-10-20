@@ -12,34 +12,34 @@ class PHPPrinterPPLA {
         $this->CR = chr(13);
     }
     
-    public $linhas = array();
+    public $lines = array();
     
     public function add(){
-        $this->linhas[] = $this->STX . 'L' . $this->CR;
-        $this->linhas[] = $this->STX . 'c0600' . $this->CR;
+        $this->lines[] = $this->STX . 'L' . $this->CR;
+        $this->lines[] = $this->STX . 'c0600' . $this->CR;
     }
     
-    public function text($str, $x, $y, $fonte = 0, $orientacao = 1, $mH = 0, $mV = 0){
+    public function text($str, $x, $y, $font = 0, $orientation = 1, $mH = 0, $mV = 0){
         $x = ($x < 45 ? 45:$x);
         $x = addLeading($x, 4);
         $y = addLeading($y, 4);
-        $this->linhas[] = $orientacao . $fonte . $mH . $mV . '003' . $y . $x . $str . $this->CR;
+        $this->lines[] = $orientation . $font . $mH . $mV . '003' . $y . $x . $str . $this->CR;
     }
     
-    public function barcode($bar, $x = 0, $y = 0, $alt = 0){
+    public function barcode($bar, $x = 0, $y = 0, $height = 0){
         $x = ($x < 45 ? 45:$x);
         $x = addLeading($x, 4);
         $y = addLeading($y, 4);
-        $alt = addLeading($alt, 3);
-        $this->linhas[] = 'H16' . $this->CR;
-        $this->linhas[] = 'D18' . $this->CR;
-        $this->linhas[] = '1A63' . $alt . $y . $x . $bar . $this->CR;
+        $height = addLeading($alt, 3);
+        $this->lines[] = 'H16' . $this->CR;
+        $this->lines[] = 'D18' . $this->CR;
+        $this->lines[] = '1A63' . $height . $y . $x . $bar . $this->CR;
     }
     
     public function output(){
-        $this->linhas[] = 'E' . $this->CR;
-        $this->linhas[] = $this->STX . 'f320' . $this->CR;
-        return implode('', $this->linhas);
+        $this->lines[] = 'E' . $this->CR;
+        $this->lines[] = $this->STX . 'f320' . $this->CR;
+        return implode('', $this->lines);
     }
     
 }
