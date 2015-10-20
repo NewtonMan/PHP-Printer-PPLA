@@ -36,7 +36,7 @@ class PHPPrinterPPLA {
         $this->linhas[] = '1A63' . $alt . $y . $x . $bar . $this->CR;
     }
     
-    public function gerar(){
+    public function output(){
         $this->linhas[] = 'E' . $this->CR;
         $this->linhas[] = $this->STX . 'f320' . $this->CR;
         return implode('', $this->linhas);
